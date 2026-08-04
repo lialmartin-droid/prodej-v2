@@ -1,10 +1,8 @@
-# Rychlé nahrání verze 2.0
+# Nahrání verze 2.0.2 na GitHub
 
-1. Založte nový repozitář, například `podprosecske-produkty-v2`.
-2. Rozbalte ZIP.
-3. Označte všechny soubory uvnitř rozbalené složky a nahrajte je do kořene repozitáře.
-4. Potvrďte **Commit changes**.
-5. Zapněte GitHub Pages v **Settings → Pages → Deploy from a branch → main → /root**.
-6. Otevřete vytvořenou testovací adresu.
+1. Rozbalte ZIP.
+2. Nahrajte celý obsah rozbalené složky do kořene nového repozitáře.
+3. Potvrďte Commit changes.
+4. V Settings → Pages nastavte větev main a složku /root.
 
-Současný veřejný repozitář ponechte beze změny.
+Tato verze používá stejný testovací backend jako předchozí verze 2.0. Apps Script z ostré verze 1.x neměňte.
