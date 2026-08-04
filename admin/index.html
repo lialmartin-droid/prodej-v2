@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fffdf8">
+  <title>Administrace – Podprosečské domácí produkty</title>
+  <link rel="stylesheet" href="../assets/style.css?v=20-20260803">
+</head>
+<body data-pdp-admin-version="16">
+<section id="adminLogin" class="login-screen hidden">
+  <div class="login-card">
+    <div style="font-size:46px">🌼🐝🐔</div>
+    <div class="kicker">Zabezpečená administrace</div>
+    <h2>Přihlášení</h2>
+    <p class="muted">Zadejte heslo administrace.</p>
+    <input id="adminPassword" type="password" placeholder="Heslo administrace" autocomplete="current-password">
+    <button id="loginButton" class="primary-button" type="button">Přihlásit</button>
+    <p id="loginMessage" class="feedback"></p>
+  </div>
+</section>
+
+<div id="adminApp" class="site-shell admin-shell hidden">
+  <header class="hero admin-hero">
+    <div class="hero-icons"><span>🌼🐝</span><span>🐔🏡</span></div>
+    <div class="kicker">Administrace</div>
+    <h1>Podprosečské domácí produkty</h1>
+    <p>Objednávky, rezervace vajec, kalendář a správa nabídky.</p>
+    <button id="logoutButton" class="secondary-button" type="button" style="margin-top:14px">Odhlásit</button>
+  </header>
+
+  <main class="content">
+    <section class="stats-grid">
+      <article><span>Nové objednávky</span><strong id="statNew">0</strong></article>
+      <article><span>Tržba objednávek</span><strong id="statRevenue">0 Kč</strong></article>
+      <article><span>Objednaná vejce</span><strong id="statEggs">0</strong></article>
+      <article><span>Objednané sklenice</span><strong id="statHoney">0</strong></article>
+      <article><span>Vejce fyzicky skladem</span><strong id="statEggStock">—</strong></article>
+      <article><span>Nastavená snáška</span><strong id="statEggDaily">—</strong></article>
+      <article><span>Tržba tento měsíc</span><strong id="statMonthRevenue">0 Kč</strong></article>
+      <article><span>Objednávky tento měsíc</span><strong id="statMonthOrders">0</strong></article>
+      <article><span>Předobjednávky</span><strong id="statPreorders">0</strong></article>
+      <article><span>Aktivní zákazníci</span><strong id="statCustomers">0</strong></article>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="ordersTab">Objednávky</button>
+      <button class="tab" data-tab="calendarTab">Kalendář</button>
+      <button class="tab" data-tab="eggsTab">Vejce</button>
+      <button class="tab" data-tab="productsTab">Produkty</button>
+      <button class="tab" data-tab="insightsTab">Statistiky</button>
+      <button class="tab" data-tab="settingsTab">Nastavení webu</button>
+    </nav>
+
+    <section id="ordersTab" class="tab-panel active">
+      <div class="section-head">
+        <div><div class="eyebrow">Přehled</div><h2>Objednávky</h2></div>
+        <button id="showManualOrder" class="primary-small">Nová objednávka</button>
+      </div>
+
+      <div id="manualOrderForm" class="admin-form hidden">
+        <div class="form-grid">
+          <label><span>Jméno zákazníka</span><input id="manualName" placeholder="Marie Nováková"></label>
+          <label><span>Telefon</span><input id="manualPhone" placeholder="Lze nechat prázdné"></label>
+          <label><span>E-mail</span><input id="manualEmail" type="email" placeholder="Lze nechat prázdné"></label>
+          <label><span>Termín vyzvednutí</span><input id="manualPickup" type="date"></label>
+          <label><span>Stav</span>
+            <select id="manualStatus">
+              <option>Nová</option><option>Připravuji</option><option>Připraveno</option><option>Vyzvednuto</option>
+            </select>
+          </label>
+          <div class="full">
+            <span class="field-label">Položky</span>
+            <div id="manualProducts" class="quantity-list"></div>
+          </div>
+          <label class="full"><span>Poznámka</span><textarea id="manualNote" rows="3"></textarea></label>
+        </div>
+        <div class="actions">
+          <button id="cancelManualOrder" class="secondary-button">Zrušit</button>
+          <button id="saveManualOrder" class="primary-small">Uložit objednávku</button>
+        </div>
+      </div>
+
+      <div class="filter-grid">
+        <input id="searchOrders" placeholder="Hledat jméno nebo telefon">
+        <select id="statusFilter">
+          <option value="">Všechny stavy</option>
+          <option>Nová</option><option>Připravuji</option><option>Připraveno</option><option>Vyzvednuto</option><option>Zrušeno</option>
+        </select>
+        <select id="archiveFilter">
+          <option value="active">Aktivní</option>
+          <option value="archive">Archiv</option>
+          <option value="all">Všechny</option>
+        </select>
+      </div>
+
+      <div id="ordersList" class="stack"></div>
+    </section>
+
+    <section id="calendarTab" class="tab-panel">
+      <div class="section-head">
+        <div><div class="eyebrow">Podle termínu</div><h2>Kalendář objednávek</h2></div>
+      </div>
+      <div id="calendarList" class="stack"></div>
+    </section>
+
+    <section id="eggsTab" class="tab-panel">
+      <div class="section-head">
+        <div><div class="eyebrow">Rezervace a snáška</div><h2>Plánování vajec</h2></div>
+      </div>
+
+      <div class="admin-form">
+        <p class="settings-note"><strong>Aktuální sklad</strong> je fyzický počet vajec, který máš právě teď, včetně vajec rezervovaných pro zákazníky, ale ještě nevyzvednutých. Při označení objednávky jako Vyzvednuto se vejce ze skladu automaticky odečtou.</p>
+        <div class="form-grid">
+          <label><span>Aktuálně fyzicky skladem</span><input id="eggCurrentStock" type="number" min="0" step="1"></label>
+          <label><span>Předpokládaná snáška za den</span><input id="eggDailyProduction" type="number" min="0" step="1"></label>
+          <label><span>Bezpečnostní rezerva</span><input id="eggSafetyReserve" type="number" min="0" step="1"></label>
+          <label><span>Plánovat dní dopředu</span><input id="eggPlanningDays" type="number" min="7" max="365" step="1"></label>
+        </div>
+        <div class="settings-footer">
+          <div class="meta">
+            <div>Stav skladu je dopočítán k datu <strong id="eggStockDate">—</strong>.</div>
+            <div id="eggAccrualInfo">—</div>
+          </div>
+          <button id="saveEggSettings" class="primary-small" type="button">Uložit nastavení</button>
+        </div>
+      </div>
+
+      <div class="section-head compact-head">
+        <div><div class="eyebrow">Následujících 21 dní</div><h2>Předpověď dostupnosti</h2></div>
+      </div>
+      <div class="forecast-legend">
+        <span><strong>Stav po rezervacích</strong> = předpokládaný počet vajec po vydání již objednaných vajec.</span>
+        <span><strong>Další volná kapacita</strong> = kolik nových vajec lze na tento den ještě bezpečně objednat, aniž by chyběla pro pozdější zákazníky.</span>
+      </div>
+      <div id="eggForecast" class="forecast-list"></div>
+    </section>
+
+    <section id="productsTab" class="tab-panel">
+      <div class="section-head">
+        <div><div class="eyebrow">Nabídka</div><h2>Správa produktů</h2></div>
+        <button id="showProductForm" class="primary-small">Přidat produkt</button>
+      </div>
+
+      <div id="productForm" class="admin-form hidden">
+        <div class="form-grid">
+          <label><span>Název</span><input id="newProductName"></label>
+          <label><span>Emoji</span><input id="newProductEmoji" placeholder="📦"></label>
+          <label><span>Cena</span><input id="newProductPrice" type="number" min="0"></label>
+          <label><span>Jednotka</span><input id="newProductUnit" placeholder="kus"></label>
+          <label class="full"><span>Krátký popis</span><input id="newProductShort"></label>
+          <label class="full"><span>Podrobné informace</span><textarea id="newProductDetail" rows="3"></textarea></label>
+          <label class="full"><span>Fotografie produktu</span><input id="newProductImage" placeholder="assets/images/products/med.jpg nebo https://…"><small>Fotografii nahrajte do složky assets/images/products a sem vložte její cestu.</small></label>
+          <label><span>Minimální předstih (dny)</span><input id="newProductLead" type="number" min="0" value="0"></label>
+          <label><span>Předpokládané naskladnění</span><input id="newProductRestock" type="date"></label>
+          <label><span>Rychlá tlačítka (oddělit čárkou)</span><input id="newProductQuick" placeholder="6, 10, 30"></label>
+          <label><span>Plánované množství / kapacita</span><input id="newProductCapacity" type="number" min="0" placeholder="např. 120"></label>
+          <label><span>Text v potvrzovacím e-mailu</span><select id="newProductEmailGroup"><option value="SLEPICKY">🐔 Naše slepičky</option><option value="VCELICKY">🐝 Naše včeličky</option><option value="FARMARI" selected>🌿 Podprosečští farmáři</option><option value="VLASTNI">✍️ Vlastní označení</option></select></label>
+          <label class="full"><span>Vlastní označení</span><input id="newProductEmailText" maxlength="120" placeholder="např. naše levandulová zahrada"><small>Použije se jen při volbě Vlastní označení.</small></label>
+          <label><input id="newProductPreorder" type="checkbox"> Povolit předobjednávky</label>
+        </div>
+        <div class="actions">
+          <button id="cancelProductForm" class="secondary-button">Zrušit</button>
+          <button id="saveNewProduct" class="primary-small">Uložit produkt</button>
+        </div>
+      </div>
+
+      <div id="productsList" class="stack"></div>
+    </section>
+
+
+    <section id="insightsTab" class="tab-panel">
+      <div class="section-head"><div><div class="eyebrow">Souhrny</div><h2>Statistiky prodeje</h2></div></div>
+      <div class="insights-grid">
+        <article class="card"><h3>Nejprodávanější produkty</h3><div id="topProducts"></div></article>
+        <article class="card"><h3>TOP zákazníci</h3><div id="topCustomers"></div></article>
+      </div>
+      <article class="card"><h3>Měsíční tržby</h3><div id="monthlyRevenue" class="bar-list"></div></article>
+    </section>
+
+    <section id="settingsTab" class="tab-panel">
+      <div class="section-head"><div><div class="eyebrow">Veřejná stránka</div><h2>Nastavení webu</h2></div></div>
+      <div class="admin-form">
+        <h3>Informační banner</h3>
+        <div class="form-grid">
+          <label><input id="bannerEnabled" type="checkbox"> Zobrazit banner</label>
+          <label><span>Styl</span><select id="bannerStyle"><option value="yellow">Žlutý</option><option value="green">Zelený</option><option value="blue">Modrý</option><option value="red">Červený</option></select></label>
+          <label class="full"><span>Nadpis</span><input id="bannerTitle" placeholder="Otevřeli jsme předprodej medu"></label>
+          <label class="full"><span>Text</span><textarea id="bannerText" rows="3"></textarea></label>
+          <label><span>Zobrazit od</span><input id="bannerFrom" type="date"></label>
+          <label><span>Zobrazit do</span><input id="bannerTo" type="date"></label>
+        </div>
+        <h3>Dovolená / blokace vyzvednutí</h3>
+        <div class="form-grid">
+          <label><input id="ordersPaused" type="checkbox"> Zablokovat vyzvednutí v zadaném období</label>
+          <label><span>Od</span><input id="pauseFrom" type="date"></label>
+          <label><span>Do</span><input id="pauseTo" type="date"></label>
+          <label class="full"><span>Upozornění zákazníkům</span><textarea id="pauseMessage" rows="3" placeholder="Např. Máme dovolenou. Objednávky přijímáme, vyzvednutí bude možné nejdříve od..."></textarea></label>
+          <label><span>Max. objednávek na den</span><input id="dailyOrderLimit" type="number" min="0" placeholder="0 = bez limitu"></label>
+        </div>
+        <div class="actions"><button id="saveBusinessSettings" class="primary-small" type="button">Uložit nastavení webu</button></div>
+      </div>
+      <p class="settings-note">SMS připomínky se neposílají automaticky. Zvolený způsob kontaktu se uloží k objednávce, abyste zákazníka kontaktoval ručně.</p>
+    </section>
+  </main>
+</div>
+
+<iframe name="adminSubmitFrame" id="adminSubmitFrame" hidden></iframe>
+<form id="adminBackendForm" method="post" target="adminSubmitFrame" hidden>
+  <input id="adminAction" name="action" type="hidden">
+  <input id="adminToken" name="token" type="hidden">
+  <input id="adminPayload" name="payload" type="hidden">
+</form>
+<script src="../assets/config.js?v=15-20260802-fix2"></script>
+<script src="../assets/admin.js?v=20-20260803"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f1e4">
+  <meta name="description" content="Med a další produkty od našich včel, čerstvá vejce od slepiček z volného chovu a poctivé produkty z naší zahrádky.">
+  <title>Podprosečské domácí produkty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap&subset=latin-ext" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=20-20260803">
+</head>
+<body data-pdp-version="20">
+<div class="site-shell v2-shell">
+  <header class="v2-hero">
+    <img class="v2-hero-image" src="assets/images/hero-podproseci.png" alt="Akvarelová krajina s úly, skleníkem, kurníkem, slepicemi a kohoutem">
+    <div class="v2-hero-copy">
+      <div class="kicker">Rodinné hospodářství z Pod Prosečí</div>
+      <h1>Podprosečské domácí produkty</h1>
+      <p>Vítejte u nás v Pod Prosečí. Nabízíme med a další produkty od našich včel, čerstvá vejce od slepiček z volného chovu i další poctivé produkty z naší zahrádky.</p>
+      <a class="hero-cta" href="#nabidka">Prohlédnout nabídku</a>
+    </div>
+  </header>
+
+  <main class="content v2-content">
+    <section id="publicBanner" class="public-banner hidden" aria-live="polite"></section>
+
+    <section class="origin-grid" aria-label="Odkud naše produkty pocházejí">
+      <article><img src="assets/images/od-vcel.png" alt="Úly a včely"><h2>Od našich včel</h2><p>Med, vosk a další včelí produkty z místní krajiny.</p></article>
+      <article><img src="assets/images/od-slepic.png" alt="Slepice a kohout u kurníku"><h2>Od slepiček z volného chovu</h2><p>Čerstvá vejce od slepiček s každodenním přístupem ven.</p></article>
+      <article><img src="assets/images/ze-zahradky.png" alt="Skleník a zahrada"><h2>Z vlastní zahrádky</h2><p>Bylinky, koření a sezonní dobroty, které sami pěstujeme.</p></article>
+    </section>
+
+    <section id="nabidka" class="products-section">
+      <div class="section-head">
+        <div><div class="eyebrow">Aktuální nabídka</div><h2>Vyberte si něco dobrého</h2></div>
+        <div id="itemCount" class="muted">Načítám…</div>
+      </div>
+      <div id="products"><div class="products-loading" role="status"><span class="loading-spinner" aria-hidden="true"></span><span>Načítám aktuální nabídku…</span></div></div>
+    </section>
+
+    <section class="how-section">
+      <div class="section-head"><div><div class="eyebrow">Jednoduché objednání</div><h2>Jak to u nás funguje</h2></div></div>
+      <div class="how-grid">
+        <article><span>1</span><strong>Vyberete si produkty</strong><p>Do košíku přidáte přesně to, co Vám udělá radost.</p></article>
+        <article><span>2</span><strong>Zvolíte termín</strong><p>Systém Vám nabídne nejbližší možné vyzvednutí.</p></article>
+        <article><span>3</span><strong>Potvrdíme objednávku</strong><p>Na e-mail Vám přijde přehled a číslo objednávky.</p></article>
+        <article><span>4</span><strong>Vyzvednete si ji</strong><p>Den předem Vás kontaktujeme zvoleným způsobem.</p></article>
+      </div>
+    </section>
+
+    <section class="order-section" id="objednavka">
+      <div class="section-head"><div><div class="eyebrow">Vaše objednávka</div><h2>Souhrn a dokončení</h2></div></div>
+      <div id="summary" class="muted">Nejdřív načítáme aktuální nabídku.</div>
+      <div class="total-row"><span>Celkem</span><span id="totalPrice">0 Kč</span></div>
+      <div class="form-area">
+        <label class="line-field"><span>Jméno a příjmení</span><input id="customerName" type="text" autocomplete="name" placeholder="Jan Novák"></label>
+        <label class="line-field"><span>Telefon</span><input id="customerPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="777 123 456"></label>
+        <label class="line-field"><span>E-mail</span><input id="customerEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="jan.novak@email.cz" required><small class="field-help">E-mail slouží pouze k potvrzení Vaší objednávky a informacím o jejím vyzvednutí. Žádné reklamní e-maily od nás nedostanete.</small></label>
+        <fieldset class="choice-box"><legend>Jak Vás máme informovat den před vyzvednutím?</legend><label><input type="radio" name="contactMethod" value="SMS" checked> SMS</label><label><input type="radio" name="contactMethod" value="E-mail"> E-mail</label></fieldset>
+        <div id="splitOrderBox" class="choice-box hidden"><strong>Objednávka obsahuje dostupné i předobjednané produkty</strong><p class="field-help">Dostupné produkty můžete vyzvednout dříve a předobjednávku až po naskladnění.</p><label><input type="radio" name="splitOrder" value="together" checked> Vyzvednout vše najednou po naskladnění</label><label><input type="radio" name="splitOrder" value="split"> Rozdělit na dvě vyzvednutí</label><div class="notice"><strong>Upozornění:</strong> při rozdělení Vás budeme před každým vyzvednutím kontaktovat zvoleným způsobem.</div></div>
+        <div id="splitPickupSummary" class="notice hidden"></div>
+        <label class="line-field"><span id="pickupDateLabel">Termín vyzvednutí</span><small class="field-help">Nejbližší možný termín se nastaví automaticky. Pokud si přejete vyzvednutí později, zvolte jiné datum.</small><input id="pickupDate" type="date"></label>
+        <div id="pickupAvailability" class="availability-box hidden" aria-live="polite"></div>
+        <label class="line-field"><span>Poznámka</span><textarea id="customerNote" rows="3" placeholder="Například vyzvednutí odpoledne"></textarea></label>
+      </div>
+      <button id="submitOrder" class="primary-button" type="button" disabled>Odeslat objednávku</button>
+      <p id="feedback" class="feedback" aria-live="polite"></p>
+    </section>
+
+    <section class="trust-section">
+      <h2>Děkujeme, že podporujete místní hospodářství v Pod Prosečí.</h2>
+      <p>S radostí pro Vás připravujeme produkty od našich včel, slepiček a z vlastní zahrádky.</p>
+    </section>
+  </main>
+
+  <div id="mobileCartBar" class="mobile-cart-bar hidden"><span id="mobileCartText">Košík je prázdný</span><a href="#objednavka">Pokračovat</a></div>
+
+  <footer><div><strong>Podprosečské domácí produkty</strong><br>Pod Prosečí 102/2 · Jablonec nad Nisou</div><div class="footer-contact"><a href="mailto:podprosecskeprodukty@gmail.com">podprosecskeprodukty@gmail.com</a><br><a href="tel:+420732687040">+420 732 687 040</a></div></footer>
+</div>
+<iframe name="orderSubmitFrame" id="orderSubmitFrame" hidden></iframe>
+<form id="backendOrderForm" method="post" target="orderSubmitFrame" hidden><input name="action" type="hidden" value="createOrder"><input id="backendPayload" name="payload" type="hidden"></form>
+<script src="assets/config.js?v=20-20260803"></script>
+<script src="assets/customer.js?v=20-20260803"></script>
+</body>
+</html>
