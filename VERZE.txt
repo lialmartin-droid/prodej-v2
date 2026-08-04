@@ -1,2 +1,2 @@
-Podprosečské domácí produkty 2.0.2
-Schválený vizuální návrh: text nad ilustrací, tři původové bloky a ilustrovaný postup objednávky.
+Podprosečské domácí produkty 2.0.3
+Aktualizované ilustrace: včelí úly bez slepic a zvýrazněný skleník bez slepic.
